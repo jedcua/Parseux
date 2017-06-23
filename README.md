@@ -1,4 +1,5 @@
 # Parseux
+(NOTE: This project is WIP, its API _will_ change in the future)
 
 Easily parse CSV/Excel files to DTOs
 
@@ -50,11 +51,26 @@ The Excel file is encapsulated by `ExcelIterator` and then by `IteratorAsStream`
 `workbook` is an instance of `XSSFWorkbook` from [Apache POI](https://github.com/apache/poi)
 
 ## Installation (Maven)
+Clone this repository and install
 ```bash
-// Clone this repository
 $ git clone https://github.com/jedcua/Parseux.git
 $ cd Parseux
 $ mvn clean install
+```
+
+Add the following dependencies on your `pom.xml`
+```xml
+<dependency>
+    <groupId>com.dragonfruit</groupId>
+    <artifactId>Parseux</artifactId>
+    <version>0.0.1</version>
+</dependency>
+
+<dependency>
+    <groupId>com.fasterxml.jackson.dataformat</groupId>
+    <artifactId>jackson-dataformat-csv</artifactId>
+    <version>2.9.0.pr3</version>
+</dependency>
 ```
 
 ## License
