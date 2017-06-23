@@ -20,7 +20,7 @@ public final class CsvAsDTOTest {
             "DTOs has correct size",
             new CsvAsDTO<>(
                 new InputStreamReader(
-                    new ResourceAsStream("test.csv").stream()
+                    new ResourceAsStream("csv/test.csv").stream()
                 ),
                 TestDTO.class
             ).asDTOs(),
@@ -34,7 +34,7 @@ public final class CsvAsDTOTest {
             "DTOs are parsed correctly with byte array",
             new CsvAsDTO<>(
                 IOUtils.toByteArray(
-                    new ResourceAsStream("test.csv").stream()
+                    new ResourceAsStream("csv/test.csv").stream()
                 ),
                 TestDTO.class
             ).asDTOs(),
@@ -69,7 +69,7 @@ public final class CsvAsDTOTest {
             "DTOs are parsed correctly",
             new CsvAsDTO<>(
                 new InputStreamReader(
-                    new ResourceAsStream("test.csv").stream()
+                    new ResourceAsStream("csv/test.csv").stream()
                 ),
                 TestDTO.class
             ).asDTOs(),
@@ -104,7 +104,7 @@ public final class CsvAsDTOTest {
             "DTOs are parsed correctly, even if excessive whitespace",
             new CsvAsDTO<>(
                 new InputStreamReader(
-                    new ResourceAsStream("test-whitespace.csv").stream()
+                    new ResourceAsStream("csv/test-whitespace.csv").stream()
                 ),
                 TestDTO.class
             ).asDTOs(),
@@ -137,7 +137,7 @@ public final class CsvAsDTOTest {
     public void throwExceptionTrailingComma() {
         new CsvAsDTO<>(
             new InputStreamReader(
-                new ResourceAsStream("test-trail-comma.csv").stream()
+                new ResourceAsStream("csv/test-trail-comma.csv").stream()
             ),
             TestDTO.class
         ).asDTOs();
@@ -147,7 +147,7 @@ public final class CsvAsDTOTest {
     public void throwExceptionBadData() {
         new CsvAsDTO<>(
             new InputStreamReader(
-                new ResourceAsStream("test-bad-data.csv").stream()
+                new ResourceAsStream("csv/test-bad-data.csv").stream()
             ),
             TestDTO.class
         ).asDTOs();
@@ -157,7 +157,7 @@ public final class CsvAsDTOTest {
     public void throwExceptionMissingData() {
         new CsvAsDTO<>(
             new InputStreamReader(
-                new ResourceAsStream("test-missing-data.csv").stream()
+                new ResourceAsStream("csv/test-missing-data.csv").stream()
             ),
             TestDTO.class
         ).asDTOs();
