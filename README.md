@@ -2,6 +2,8 @@
 
 [![Build Status](https://travis-ci.org/jedcua/Parseux.svg?branch=master)](https://travis-ci.org/jedcua/Parseux)
 
+[![Coverage Status](https://coveralls.io/repos/github/jedcua/Parseux/badge.svg?branch=master)](https://coveralls.io/github/jedcua/Parseux?branch=master)
+
 (NOTE: This project is WIP, its API _will_ change in the future)
 
 Easily parse CSV/Excel files to DTOs
