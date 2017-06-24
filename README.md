@@ -1,4 +1,7 @@
 # Parseux
+
+[![Build Status](https://travis-ci.org/jedcua/Parseux.svg?branch=master)](https://travis-ci.org/jedcua/Parseux)
+
 (NOTE: This project is WIP, its API _will_ change in the future)
 
 Easily parse CSV/Excel files to DTOs
