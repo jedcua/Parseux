@@ -8,7 +8,15 @@
 Easily parse CSV/Excel files to DTOs
 
 ## Usage
-Annotate your DTO class with `@JsonPropertyOrder`, which defines the order of field values to be used for parsing
+Suppose you have a csv file
+```
+value1,value2
+value1,value2
+value1,value2
+...
+```
+
+Easily parse that to a DTO by annotating your DTO class with `@JsonPropertyOrder`, which defines the order of field values to be used for parsing
 
 ```java
 @JsonPropertyOrder({"field1", "field2"})
