@@ -5,9 +5,13 @@ import com.fasterxml.jackson.dataformat.csv.CsvMapper;
 import com.fasterxml.jackson.dataformat.csv.CsvParser;
 
 import java.io.*;
+import java.util.Iterator;
 import java.util.List;
+import java.util.Spliterator;
+import java.util.Spliterators;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 /**
  * Class representing parsed CSV as DTO
@@ -21,8 +25,8 @@ public final class CsvAsDTO<T> {
     /**
      * Constructor.
      *
-     * @param streams
-     * @param dtoClass
+     * @param streams {@link Stream}
+     * @param dtoClass DTO
      */
     public CsvAsDTO(final Stream<String> streams, final Class<T> dtoClass) {
         this.streams = streams;
@@ -36,8 +40,21 @@ public final class CsvAsDTO<T> {
     /**
      * Constructor.
      *
-     * @param bufferedReader
-     * @param dtoClass
+     * @param iterator {@link Iterator} of {@link String}, each is a concat of CSV row
+     * @param dtoClass DTO
+     */
+    public CsvAsDTO(final Iterator<String> iterator, final Class<T> dtoClass) {
+        this(StreamSupport.stream(
+                Spliterators.spliteratorUnknownSize(iterator, Spliterator.ORDERED), false
+            ), dtoClass
+        );
+    }
+
+    /**
+     * Constructor.
+     *
+     * @param bufferedReader {@link BufferedReader}
+     * @param dtoClass DTO
      */
     public CsvAsDTO(final BufferedReader bufferedReader, final Class<T> dtoClass) {
         this(bufferedReader.lines(), dtoClass);
@@ -46,8 +63,8 @@ public final class CsvAsDTO<T> {
     /**
      * Constructor.
      *
-     * @param inputStreamReader
-     * @param dtoClass
+     * @param inputStreamReader {@link InputStreamReader}
+     * @param dtoClass DTO
      */
     public CsvAsDTO(final InputStreamReader inputStreamReader, final Class<T> dtoClass) {
         this(new BufferedReader(inputStreamReader), dtoClass);
@@ -56,8 +73,8 @@ public final class CsvAsDTO<T> {
     /**
      * Constructor.
      *
-     * @param byteArrayInputStream
-     * @param dtoClass
+     * @param byteArrayInputStream {@link ByteArrayInputStream}
+     * @param dtoClass DTO
      */
     public CsvAsDTO(final ByteArrayInputStream byteArrayInputStream, final Class<T> dtoClass) {
         this(new InputStreamReader(byteArrayInputStream), dtoClass);
@@ -66,8 +83,8 @@ public final class CsvAsDTO<T> {
     /**
      * Constructor.
      *
-     * @param bytes
-     * @param dtoClass
+     * @param bytes Array of bytes
+     * @param dtoClass DTO
      */
     public CsvAsDTO(final byte[] bytes, final Class<T> dtoClass) {
         this(new ByteArrayInputStream(bytes), dtoClass);

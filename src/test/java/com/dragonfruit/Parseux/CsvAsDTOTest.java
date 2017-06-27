@@ -12,6 +12,7 @@ import org.junit.Test;
 import java.io.IOException;
 import java.io.InputStreamReader;
 import java.io.UncheckedIOException;
+import java.util.Arrays;
 
 public final class CsvAsDTOTest {
     @Test
@@ -25,6 +26,44 @@ public final class CsvAsDTOTest {
                 TestDTO.class
             ).asDTOs(),
             IsCollectionWithSize.hasSize(4)
+        );
+    }
+
+    @Test
+    public void parsedWithIterator() throws IOException {
+        MatcherAssert.assertThat(
+            "DTOs are parsed correctly with iterators",
+            new CsvAsDTO<>(
+                Arrays.asList(
+                    "jed,24",
+                    "aisyl,20",
+                    "linux,23",
+                    "juan,29"
+                ).iterator(),
+                TestDTO.class
+            ).asDTOs(),
+            Matchers.contains(
+                SamePropertyValuesAs.samePropertyValuesAs(
+                    new TestDTO(
+                        "jed", 24
+                    )
+                ),
+                SamePropertyValuesAs.samePropertyValuesAs(
+                    new TestDTO(
+                        "aisyl", 20
+                    )
+                ),
+                SamePropertyValuesAs.samePropertyValuesAs(
+                    new TestDTO(
+                        "linux", 23
+                    )
+                ),
+                SamePropertyValuesAs.samePropertyValuesAs(
+                    new TestDTO(
+                        "juan", 29
+                    )
+                )
+            )
         );
     }
 

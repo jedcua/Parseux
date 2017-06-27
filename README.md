@@ -39,6 +39,7 @@ List<MyDTO> dtos = new CsvAsDTO<>(
 
 `csv` can be:
 * `Stream<String>` where each `String` is 1 row (i.e `"value1,value2"`)
+* `Iterator<String>` where each `String` also 1 row
 * `BufferedReader`
 * `InputStreamReader`
 * `ByteArrayStreamReader`
@@ -49,16 +50,14 @@ Parsing excel files to DTO is the same with CSV:
 
 ```java
 List<MyDTO> dtos = new CsvAsDTO<>(
-    new IteratorAsStream<>(
-        new ExcelIterator(
-            workbook
-        )
-    ).toStream(),
+    new ExcelIterator(
+        workbook
+    )
     MyDTO.class
 ).asDTOs()
 ```
 
-The Excel file is encapsulated by `ExcelIterator` and then by `IteratorAsStream` which can be used by `CsvAsDTO`.
+`ExcelIterator` in an implementation of `Iterator<String>` that run through all sheets and rows, and iteration of concatenated cells per row as String.
 
 `workbook` is an instance of `XSSFWorkbook` from [Apache POI](https://github.com/apache/poi)
 
@@ -75,7 +74,7 @@ Add the following dependencies on your `pom.xml`
 <dependency>
     <groupId>com.dragonfruit</groupId>
     <artifactId>Parseux</artifactId>
-    <version>0.0.1</version>
+    <version>0.0.2</version>
 </dependency>
 
 <dependency>
