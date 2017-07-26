@@ -1,7 +1,8 @@
 package com.dragonfruit.Parseux;
 
 import com.dragonfruit.ResourceAsStream;
-import com.dragonfruit.dto.TestDTO;
+import com.dragonfruit.dto.CsvTestDTO;
+import com.dragonfruit.dto.TsvTestDTO;
 import org.apache.poi.util.IOUtils;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -23,7 +24,7 @@ public final class CsvAsDTOTest {
                 new InputStreamReader(
                     new ResourceAsStream("csv/test.csv").stream()
                 ),
-                TestDTO.class
+                CsvTestDTO.class
             ).asDTOs(),
             IsCollectionWithSize.hasSize(4)
         );
@@ -40,26 +41,26 @@ public final class CsvAsDTOTest {
                     "linux,23",
                     "juan,29"
                 ).iterator(),
-                TestDTO.class
+                CsvTestDTO.class
             ).asDTOs(),
             Matchers.contains(
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "jed", 24
                     )
                 ),
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "aisyl", 20
                     )
                 ),
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "linux", 23
                     )
                 ),
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "juan", 29
                     )
                 )
@@ -75,26 +76,26 @@ public final class CsvAsDTOTest {
                 IOUtils.toByteArray(
                     new ResourceAsStream("csv/test.csv").stream()
                 ),
-                TestDTO.class
+                CsvTestDTO.class
             ).asDTOs(),
             Matchers.contains(
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "jed", 24
                     )
                 ),
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "aisyl", 20
                     )
                 ),
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "linux", 23
                     )
                 ),
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "juan", 29
                     )
                 )
@@ -110,26 +111,26 @@ public final class CsvAsDTOTest {
                 new InputStreamReader(
                     new ResourceAsStream("csv/test.csv").stream()
                 ),
-                TestDTO.class
+                CsvTestDTO.class
             ).asDTOs(),
             Matchers.contains(
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "jed", 24
                     )
                 ),
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "aisyl", 20
                     )
                 ),
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "linux", 23
                     )
                 ),
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "juan", 29
                     )
                 )
@@ -145,26 +146,26 @@ public final class CsvAsDTOTest {
                 new InputStreamReader(
                     new ResourceAsStream("csv/test-whitespace.csv").stream()
                 ),
-                TestDTO.class
+                CsvTestDTO.class
             ).asDTOs(),
             Matchers.contains(
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "jed", 24
                     )
                 ),
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "aisyl", 20
                     )
                 ),
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "linux", 23
                     )
                 ),
                 SamePropertyValuesAs.samePropertyValuesAs(
-                    new TestDTO(
+                    new CsvTestDTO(
                         "juan", 29
                     )
                 )
@@ -178,7 +179,7 @@ public final class CsvAsDTOTest {
             new InputStreamReader(
                 new ResourceAsStream("csv/test-trail-comma.csv").stream()
             ),
-            TestDTO.class
+            CsvTestDTO.class
         ).asDTOs();
     }
 
@@ -188,7 +189,7 @@ public final class CsvAsDTOTest {
             new InputStreamReader(
                 new ResourceAsStream("csv/test-bad-data.csv").stream()
             ),
-            TestDTO.class
+            CsvTestDTO.class
         ).asDTOs();
     }
 
@@ -198,7 +199,67 @@ public final class CsvAsDTOTest {
             new InputStreamReader(
                 new ResourceAsStream("csv/test-missing-data.csv").stream()
             ),
-            TestDTO.class
+            CsvTestDTO.class
         ).asDTOs();
+    }
+
+    @Test
+    public void parsedTsvCorrectly() {
+        MatcherAssert.assertThat(
+            "Tab seperated values parsed correctly",
+            new CsvAsDTO<>(
+                new InputStreamReader(
+                    new ResourceAsStream("tsv/test.tsv").stream()
+                ),
+                TsvTestDTO.class
+            ).asDTOs(),
+            Matchers.contains(
+                SamePropertyValuesAs.samePropertyValuesAs(
+                    new TsvTestDTO(
+                        "9170000001", 100.0
+                    )
+                ),
+                SamePropertyValuesAs.samePropertyValuesAs(
+                    new TsvTestDTO(
+                        "9170000002", 200.0
+                    )
+                ),
+                SamePropertyValuesAs.samePropertyValuesAs(
+                    new TsvTestDTO(
+                        "9170000003", 12.0
+                    )
+                )
+            )
+        );
+    }
+
+    @Test
+    public void parsedTsvCorrectlyNoQuotes() {
+        MatcherAssert.assertThat(
+            "Tab seperated values with no quotes parsed correctly",
+            new CsvAsDTO<>(
+                new InputStreamReader(
+                    new ResourceAsStream("tsv/test-no-quotes.tsv").stream()
+                ),
+                TsvTestDTO.class
+            ).asDTOs(),
+            Matchers.contains(
+                SamePropertyValuesAs.samePropertyValuesAs(
+                    new TsvTestDTO(
+                        "9170000001", 100.0
+                    )
+                ),
+                SamePropertyValuesAs.samePropertyValuesAs(
+                    new TsvTestDTO(
+                        "9170000002", 200.0
+                    )
+                ),
+                SamePropertyValuesAs.samePropertyValuesAs(
+                    new TsvTestDTO(
+                        "9170000003", 12.0
+                    )
+                )
+            )
+        );
     }
 }

@@ -3,13 +3,13 @@ package com.dragonfruit.dto;
 import com.fasterxml.jackson.annotation.JsonPropertyOrder;
 
 @JsonPropertyOrder({"name", "age"})
-public class TestDTO {
+public class CsvTestDTO {
     private String name;
     private Integer age;
 
-    public TestDTO() {}
+    public CsvTestDTO() {}
 
-    public TestDTO(final String name, final Integer age) {
+    public CsvTestDTO(final String name, final Integer age) {
         this();
         this.name = name;
         this.age = age;

@@ -32,7 +32,8 @@ public final class CsvAsDTO<T> {
         this.streams = streams;
         this.dtoClass = dtoClass;
         this.reader = new CsvMapper()
-            .readerWithSchemaFor(this.dtoClass)
+            .readerFor(this.dtoClass)
+            .with(new CsvMapper().schemaFor(dtoClass).withColumnSeparator(columnSeparator()))
             .with(CsvParser.Feature.FAIL_ON_MISSING_COLUMNS)
             .without(CsvParser.Feature.ALLOW_TRAILING_COMMA);
     }
@@ -118,5 +119,14 @@ public final class CsvAsDTO<T> {
         } catch (IOException e) {
             throw new UncheckedIOException(e);
         }
+    }
+
+    private char columnSeparator() {
+        if (this.dtoClass.isAnnotationPresent(ColumnSeparator.class)) {
+            return this.dtoClass
+                .getAnnotation(ColumnSeparator.class)
+                .value();
+        }
+        return ',';
     }
 }

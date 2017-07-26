@@ -61,27 +61,46 @@ List<MyDTO> dtos = new CsvAsDTO<>(
 
 `workbook` is an instance of `XSSFWorkbook` from [Apache POI](https://github.com/apache/poi)
 
-## Installation (Maven)
-Clone this repository and install
-```bash
-$ git clone https://github.com/jedcua/Parseux.git
-$ cd Parseux
-$ mvn clean install
+## Column Separator
+Parsing is comma separated by default. However you can annotate your 
+DTO class with `@ColumnSeparator` and provide the delimiter
+
+```java
+// Tab separated
+@ColumnSeparator(value = '\t')
+@JsonPropertyOrder({"field1", "field2"})
+class MyDTO { }
+
+// Colon separated
+@ColumnSeparator(value = ':')
+@JsonPropertyOrder({"field1", "field2"})
+class MyDTO2 { }
 ```
 
-Add the following dependencies on your `pom.xml`
-```xml
-<dependency>
-    <groupId>com.dragonfruit</groupId>
-    <artifactId>Parseux</artifactId>
-    <version>0.0.2</version>
-</dependency>
 
-<dependency>
-    <groupId>com.fasterxml.jackson.dataformat</groupId>
-    <artifactId>jackson-dataformat-csv</artifactId>
-    <version>2.9.0.pr3</version>
-</dependency>
+## Installation (Maven)
+Add the following on your `pom.xml`
+```xml
+<dependencies>
+    <dependency>
+        <groupId>com.dragonfruit</groupId>
+        <artifactId>Parseux</artifactId>
+        <version>0.0.3</version>
+    </dependency>
+    <dependency>
+        <groupId>com.fasterxml.jackson.dataformat</groupId>
+        <artifactId>jackson-dataformat-csv</artifactId>
+        <version>2.9.0.pr3</version>
+    </dependency>
+    ...
+</dependencies>
+
+<repositories>
+    <repository>
+        <id>jitpack.io</id>
+        <url>https://jitpack.io</url>
+    </repository>
+</repositories>
 ```
 
 ## License
